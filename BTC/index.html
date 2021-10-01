@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>crypto</title>
+<style>
+  body {
+  background-color: black;
+  margin-top: 20px;
+  margin-left: 10px;
+  }
+    h1  {
+        font-size: 25px;
+        color: blue;
+        margin-top: 4px;
+        margin-bottom: 4px;}
+
+    h2  {
+        font-size: 20px;
+        color: #d6c6bdea;
+        margin-top: 4px;
+        margin-bottom: 5px;}
+
+    p {
+      font-weight: 100;
+      font-size: small;
+      font-family: Arial, Helvetica, sans-serif;
+      margin-top: 24px;
+color:chartreuse
+        }
+        footer{color: rgb(101, 115, 116);}
+
+    #titulo {
+          margin-bottom: 25px;
+          color: rgb(240, 11, 30);
+          font-size: 35px;
+          margin-top: 10px;
+        }
+
+        
+</style>
+
+</head>
+
+
+<body onload="setInterval(convert, 4000)">
+
+  <h3 id="titulo">cryptoCalc</h3>
+
+<div class="row mt-5">
+    <div class="col-5-lg col-6-xl col-2-xs ml-2 p-1">
+
+
+<select id="crypto" class="" name="crypto">
+  <option value="BTC">BTC</option>
+  <option value="ETH">ETH</option>
+  <option value="LTC">LTC</option>
+  
+</select>
+<select id="fiat" class="" name="fiat">
+  <option value="USD">USD</option>
+  <option value="GPB">GBP</option>
+  <option value="EUR">EU</option>
+</select>
+
+
+<h1 id="price"></h1>
+
+    </div>
+
+<h2>crypto calc 1 --> $</h2>
+
+<div class="row">
+        <div class="col-5-lg col-6-xl col-2-xs ml-2 p-1">
+            <input type="number"  placeholder="0.8065" id="input1"> 
+         </div>
+         <div class="col-5-lg col-6-xl col-2-xs ml-2 p-1">
+          <h2 id="result"></h2>
+         </div>
+
+         <p></p>
+<p>......................................</p>
+
+
+
+
+         <select id="crypto1" class="" name="crypto1">
+          <option value="BTC">BTC</option>
+          <option value="ETH">ETH</option>
+          <option value="LTC">LTC</option>
+          
+        </select>
+        <select id="fiat1" class="" name="fiat1">
+          <option value="USD">USD</option>
+          <option value="GPB">GBP</option>
+          <option value="EUR">EU</option>
+        </select>
+        <button onclick="setInterval(convert1, 8000)">check</button>
+        
+        <h1 id="price1"></h1>
+
+        <h2>crypto calc 2 --> $</h2>
+
+
+         <div class="col-5-lg col-6-xl col-2-xs ml-2 p-1">
+          <input type="number"  placeholder="crypto amount" id="input2"> 
+         </div>
+
+         <div class="col-5-lg col-6-xl col-2-xs ml-2 p-1">
+         <h2 id="result2"></h2>
+         </div>
+         <p></p>
+         <p></p>
+
+         <div class="col-5-lg col-6-xl col-2-xs ml-2 p-1">
+           <p id="hora"></p>
+         </div>
+
+</div>
+<p></p>
+
+</div>
+
+
+
+
+<script>
+
+ 
+
+const url = 'https://apiv2.bitcoinaverage.com/indices/global/ticker/'
+function get(n) {
+  return document.getElementById(n);
+}
+
+
+
+// F1
+
+function getOption(e) {
+  return e.options[e.selectedIndex].value;
+}
+const cryptoEl = get('crypto');
+const fiatEl = get('fiat');
+const priceEl = get('price');
+const convert = async(e) => {
+const crypto = getOption(cryptoEl);
+const fiat = getOption(fiatEl);
+console.log(crypto + fiat);
+
+const res = await fetch(url + crypto + fiat);
+var data = await res.json();
+console.log(data);
+priceEl.innerHTML = data.ask;
+
+var d = document.getElementById('price').innerText;
+var f = document.getElementById('input1').value;
+var p = (d*f).toFixed(2) ;
+document.getElementById('result').innerHTML = p + " " +fiat;
+
+var f = new Date();
+document.getElementById('hora').innerHTML = f;
+//  setInterval (convert1, 2000); 
+}
+
+
+// F2
+
+function option(f) {
+  return f.options[f.selectedIndex].value;
+}
+const cryptoE = get('crypto1');
+const fiatE = get('fiat1');
+const priceE = get('price1');
+const convert1 = async(f) => {
+const crypto1 = option(cryptoE);
+const fiat1 = option(fiatE);
+console.log(crypto1 + fiat1);
+
+const res1 = await fetch(url + crypto1 + fiat1);
+var data1 = await res1.json();
+console.log(data1);
+priceE.innerHTML = data1.ask;
+
+var x = document.getElementById('price1').innerText;
+var f = document.getElementById('input2').value;
+var r = (x*f).toFixed(2) ;
+document.getElementById('result2').innerHTML = r + " " + fiat1;
+
+
+
+
+
+   
+}
+
+</script>
+
+</body>
+
+<footer>
+dev: marianoabel@gmail.com
+</footer>
+
+</html>
